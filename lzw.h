@@ -2,6 +2,7 @@
 #define LZW_H
 
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <string>
 #include "istream.h"
@@ -20,7 +21,9 @@ class Lzw {
 
 	void initTable();
 
+
 	public:
+    map<string,int> codes;
 	void setWord(string w) { word = w; }
 	string getWord() { return word; }
 	void setLetter(char l) { letter = l; }
@@ -30,11 +33,17 @@ class Lzw {
 	//puts word to table
 	void addToTable(string w);
 
+	void printTable();
+	void printTableMAP();
+
 	Lzw(int length);
 	~Lzw();
 
 	//lzw compression algorythm
-	void compress(string filename, string encodedFilename);
+	void compress(string filename, string encodedFilename, int encodedLen);
+
+
+	void debug_print_bool_vector(vector<bool> bit_vec);
 };
 
 #endif

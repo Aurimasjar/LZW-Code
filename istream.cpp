@@ -23,7 +23,7 @@ void Istream::readFromFile() {
 char Istream::getNextByte() {
 	char letter = buffer[cursor];
 	cursor++;
-	if(n >= 0 && cursor >= n) {
+	if(n >= 0 && cursor > n) {
 		letter = 0;
 		eof = true;
 	}
