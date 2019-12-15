@@ -40,6 +40,7 @@ class Ostream {
 		void writeToFile();
 		//puts string of dictionarLength bits to buffer
 		void putWordToWrite(int w);
+		void fillCursor(string word);
 
 		Ostream(string filename, int len);
 		~Ostream();

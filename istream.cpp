@@ -32,4 +32,3 @@ char Istream::getNextByte() {
 	}
 	return letter;
 }
-
