@@ -72,3 +72,16 @@ void Istream::read_bits_from_file()
 	}
 
 }
+
+void Istream::get_bits(char s[B])
+{
+	for (int i = 0; i < B; ++i) {
+	  char c = s[i];
+	  for (int j = 7; j >= 0 && c; --j) {
+		 if (c & 0x1) {
+		   b.set(8 * i + j);
+		 }
+		 c >>= 1;
+	  }
+	}
+}

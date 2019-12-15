@@ -18,6 +18,7 @@ class Lzw {
 		string word;
 		char letter;
 		int dictionaryLength; // our parameter
+		map<int, string> dictionary;
 
 		void initTable();
 

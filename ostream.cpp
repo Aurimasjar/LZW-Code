@@ -98,6 +98,17 @@ void Ostream::bitset_to_bytes()
 
 }
 
+void Ostream::fillCursor(string word){
+    char letter;
+    for(int i = 0; i < word.length(); i++){
+        letter = word[i];
+        ofBuffer[ofBuffSize] = letter;
+        ofBuffSize++;
+        if (ofBuffSize == B) 
+            writeToFile();
+    }
+}
+
 void Ostream::writeToFile()
 {
     file.write(ofBuffer, ofBuffSize);

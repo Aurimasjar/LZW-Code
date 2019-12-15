@@ -6,6 +6,7 @@
 #include <vector>
 #include <cmath>
 #include <cstdlib>
+#include <bitset>
 
 using namespace std;
 
@@ -14,7 +15,9 @@ class Istream {
 	private:
 
 		static const size_t B = 512;
+		static const size_t L = B*8;
 		char buffer[B];
+		bitset<L> b;
 		int n = -1;
 		int cursor;
 		bool eof = false;
