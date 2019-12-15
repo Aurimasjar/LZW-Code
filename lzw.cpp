@@ -158,7 +158,7 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 	//Istream in(encodedFilename);
 	stream = new Streamer(encodedFilename, filename, 1);
 	Ostream of(filename, encodedLen);
-	stream->get_k_bits(8);
+	stream->get_k_bits(9);
 	dictionaryLength = stream->w;
 
 	cout << "dictionaryLength: " << dictionaryLength << endl;
