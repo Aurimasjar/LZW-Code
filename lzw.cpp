@@ -163,32 +163,43 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 
 	cout << "dictionaryLength: " << dictionaryLength << endl;
 
-	for(int i = 0; i < 256; i++) {
+	for(int i = 0; i < 256; i++) 
+	{
 		dictionary[i] = (char)i;
 
 	}
-	int cursor = 256;
+	int cursor = 257;
 
 	int temp;
 	stream->get_k_bits(9);
 	temp = stream->w; 
 	dictionary[cursor] = dictionary[temp];
-	of.fillCursor(dictionary[cursor]);
 	cursor++;
 
-	for(int i = 1; i < dictionaryLength; i++){
+	for(int i = 1; i < dictionaryLength; i++)
+	{
 		stream->get_k_bits(9);
 		temp = stream->w; 
 		dictionary[cursor] = dictionary[temp];
-		of.fillCursor(dictionary[cursor]);
-
-		cout << dictionary[cursor] << endl;
+		of.fillCursor(dictionary[cursor-1]);
 
 		dictionary[cursor-1] = dictionary[cursor-1] + dictionary[cursor][0];
 
 		cursor++;
-
-		
+	}
+	
+	while(true)
+	{
+		if(stream->get_k_bits(9) == 0)
+		{
+			temp = stream->w; 
+			of.fillCursor(dictionary[temp]);
+			break;
+		}
+		else
+		{
+			temp = stream->w; 
+		}
 	}
 	of.writeToFile();
 
