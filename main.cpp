@@ -12,10 +12,10 @@ int main()
 	string encodedFilename = "encoded";
 
 
-
 	Lzw lzw(dictionaryLength);
 	lzw.compress(filename, encodedFilename, encodedLen);
 
-	//lzw.printTable();
-	//lzw.printTableMAP();
+	/*lzw.printTable();
+	cout << endl << "test table" << endl << endl;
+	lzw.printTableMAP();*/
 }

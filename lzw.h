@@ -14,36 +14,36 @@ class Lzw {
 
 	private:
 
-	vector<string> table; //table of words, first 256 elements are characters from ASCII table
-	string word;
-	char letter;
-	int dictionaryLength; // our parameter
+		vector<string> table; //table of words, first 256 elements are characters from ASCII table
+		string word;
+		char letter;
+		int dictionaryLength; // our parameter
 
-	void initTable();
+		void initTable();
 
 
 	public:
-    map<string,int> codes;
-	void setWord(string w) { word = w; }
-	string getWord() { return word; }
-	void setLetter(char l) { letter = l; }
-	char getLetter() { return letter; }
-	//checks if word is in table
-	bool isInTable(string w);
-	//puts word to table
-	void addToTable(string w);
+		map<string,int> codes;
 
-	void printTable();
-	void printTableMAP();
+		void setWord(string w) { word = w; }
+		string getWord() { return word; }
 
-	Lzw(int length);
-	~Lzw();
+		void setLetter(char l) { letter = l; }
+		char getLetter() { return letter; }
 
-	//lzw compression algorythm
-	void compress(string filename, string encodedFilename, int encodedLen);
+		bool isInTable(string w);
+		void addToTable(string w);
 
+		void printTable();
+		void printTableMAP();
 
-	void debug_print_bool_vector(vector<bool> bit_vec);
+		void compress(string filename, string encodedFilename, int encodedLen);
+
+		//???
+		void debug_print_bool_vector(vector<bool> bit_vec);
+
+		Lzw(int length);
+		~Lzw();
 };
 
 #endif

@@ -22,6 +22,7 @@ void Lzw::initTable() {
 }
 
 bool Lzw::isInTable(string w) {
+	
 	if(find(table.begin(), table.end(), w) != table.end()) {
 		return true;
 	}
@@ -29,8 +30,8 @@ bool Lzw::isInTable(string w) {
 }
 
 void Lzw::addToTable(string w) {
-	table.push_back(w);
 
+	table.push_back(w);
 	//cout<<codes.size()<<endl;
 	codes[w] = codes.size();
 
@@ -89,7 +90,7 @@ void Lzw::debug_print_bool_vector(vector<bool> bit_vec){
 
 void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 	Istream in(filename);
-	Ostream of(encodedFilename, encodedLen); //create that class
+	Ostream of(encodedFilename, encodedLen);
 	word = in.getNextByte();
 	while(true) {
 		letter = in.getNextByte();
@@ -103,13 +104,20 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 			//cout<<table[codes[word]]<<endl;
 
 			//DEBUG PRINT
-			cout<<"Word: "<<word<<" |Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+			cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
 			debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
 			cout<<endl;
 			//PRINT END
 
 			of.putWordToWrite(codes[word]);//write word to the file as encodedLen bit sequence
 			addToTable(word + letter);
+
+			//DEBUG PRINT
+			cout<<"New word: "<<word + letter<<" | Code of word: "<<codes[word+letter]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+			debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word+letter]));
+			cout<<endl;
+			//PRINT END
+
 			word = letter;
 		}
 	}
