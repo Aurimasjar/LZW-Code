@@ -7,6 +7,7 @@
 #include <string>
 #include "istream.h"
 #include "ostream.h"
+#include "streamer.h"
 
 using namespace std;
 
@@ -21,6 +22,8 @@ class Lzw {
 		map<int, string> dictionary;
 
 		void initTable();
+
+		Streamer *stream;
 
 
 	public:

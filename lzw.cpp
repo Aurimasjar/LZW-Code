@@ -155,9 +155,13 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 
 void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 
-	Istream in(encodedFilename);
+	//Istream in(encodedFilename);
+	stream = new Streamer(encodedFilename, filename, 1);
 	Ostream of(filename, encodedLen);
-	dictionaryLength = in.get_k_bits(9);
+	stream->get_k_bits(8);
+	dictionaryLength = stream->w;
+
+	cout << "dictionaryLength: " << dictionaryLength << endl;
 
 	for(int i = 0; i < 256; i++) {
 		dictionary[i] = (char)i;
@@ -166,15 +170,19 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 	int cursor = 256;
 
 	int temp;
-	temp = in.get_k_bits(9);
+	stream->get_k_bits(9);
+	temp = stream->w; 
 	dictionary[cursor] = dictionary[temp];
 	of.fillCursor(dictionary[cursor]);
 	cursor++;
 
 	for(int i = 1; i < dictionaryLength; i++){
-		temp = in.get_k_bits(9);
+		stream->get_k_bits(9);
+		temp = stream->w; 
 		dictionary[cursor] = dictionary[temp];
 		of.fillCursor(dictionary[cursor]);
+
+		cout << dictionary[cursor] << endl;
 
 		dictionary[cursor-1] = dictionary[cursor-1] + dictionary[cursor][0];
 
@@ -182,6 +190,7 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 
 		
 	}
+	of.writeToFile();
 
 
 }

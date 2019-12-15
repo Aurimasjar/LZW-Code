@@ -13,8 +13,9 @@ int main()
 
 
 	Lzw lzw(dictionaryLength);
-	lzw.compress(filename, encodedFilename, encodedLen);
+	//lzw.compress(filename, encodedFilename, encodedLen);
 
+	lzw.decode("encod", "testUno.txt", 9);
 	/*lzw.printTable();
 	cout << endl << "test table" << endl << endl;
 	lzw.printTableMAP();*/
