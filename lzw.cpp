@@ -175,10 +175,10 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 	temp = stream->w; 
 	dictionary[cursor] = dictionary[temp];
 	cursor++;
-
+	bool cont;
 	for(int i = 1; i < dictionaryLength; i++)
 	{
-		stream->get_k_bits(9);
+		cont = stream->get_k_bits(9);
 		temp = stream->w; 
 		dictionary[cursor] = dictionary[temp];
 		of.fillCursor(dictionary[cursor-1]);
@@ -188,7 +188,7 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 		cursor++;
 	}
 	
-	while(true)
+	while(cont)
 	{
 		if(stream->get_k_bits(9) == 0)
 		{
