@@ -157,7 +157,7 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 
 	Istream in(encodedFilename);
 	Ostream of(filename, encodedLen);
-	dictionaryLength = get_k_bits(9);
+	dictionaryLength = in.get_k_bits(9);
 
 	for(int i = 0; i < 256; i++) {
 		dictionary[i] = (char)i;
@@ -166,13 +166,13 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 	int cursor = 256;
 
 	int temp;
-	temp = get_k_bits(9);
+	temp = in.get_k_bits(9);
 	dictionary[cursor] = dictionary[temp];
 	of.fillCursor(dictionary[cursor]);
 	cursor++;
 
 	for(int i = 1; i < dictionaryLength; i++){
-		temp = get_k_bits(9);
+		temp = in.get_k_bits(9);
 		dictionary[cursor] = dictionary[temp];
 		of.fillCursor(dictionary[cursor]);
 

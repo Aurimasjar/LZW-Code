@@ -32,3 +32,43 @@ char Istream::getNextByte() {
 	}
 	return letter;
 }
+
+int Istream::get_k_bits(int k){
+	int letter;
+
+	for(int i = k-1; i >= 0; i--)
+	{
+		letter += b[cursor]*pow(2, i);
+		cursor++;
+
+		if(n > 0)
+		{
+			if(cursor >= 8*n)
+			{
+				//all bits were read
+				//cout<<cursor<<endl;
+				return 0;
+			}
+		}
+		else if(cursor >= L)
+		{
+			//need to take new portion of data
+			cursor = 0;
+			b.reset();
+			read_bits_from_file();
+		}
+	}
+
+	return letter;
+}
+
+void Istream::read_bits_from_file()
+{
+	file.read(buffer, B);
+	get_bits(buffer);
+	if(!file)
+	{
+		n = file.gcount();
+	}
+
+}
