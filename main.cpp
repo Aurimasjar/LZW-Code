@@ -15,9 +15,11 @@ int main()
 	Lzw lzw(dictionaryLength);
 	lzw.compress(filename, encodedFilename, encodedLen);
 	cout << "Encoded" << endl;
-	//lzw.decode("entest2", "detest.txt", encodedLen);
+	
 	//cout << "Decoded" << endl;
 	lzw.printTable();
 	cout << endl << "test table" << endl << endl;
 	//lzw.printTableMAP();
+
+	lzw.decode("entest2", "detest.txt", encodedLen);
 }
