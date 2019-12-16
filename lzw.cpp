@@ -194,15 +194,17 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 	{
 		if(stream->get_k_bits(encodedLen) == 0){
 			temp = stream->w;
-			cout << "Read: " << temp << endl;
+			//cout << "Read: " << temp << endl;
+			//cout << "Writing: " << dictionary[cursor-1] << " + " << dictionary[temp] << endl;	
 			//dictionary[cursor] = dictionary[temp];
-			
+			of.fillCursor(dictionary[cursor-1]);
 			if(temp != 0)
 			{
 				dictionary[cursor-1] = dictionary[cursor-1] + dictionary[temp][0];
+				of.fillCursor(dictionary[temp]);
 			}
 			//of.fillCursor(dictionary[temp]);
-			of.fillCursor(dictionary[cursor-1]);
+			
 			cursor++;
 			cont = false;
 			break;
@@ -210,11 +212,18 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 			}
 		else {
 			temp = stream->w;
-			cout << "Read: " << temp << endl;
-			dictionary[cursor] = dictionary[temp];
 			of.fillCursor(dictionary[cursor-1]);
+			//cout << "Writing: " << dictionary[cursor-1] << endl;
 
-			dictionary[cursor-1] = dictionary[cursor-1] + dictionary[cursor][0];
+			//cout << "   Temp: " << temp << "  ";
+			//cout << dictionary[cursor-1] << " ("<< cursor-1 << ") | " << dictionary[cursor][0] <<  endl;
+			
+
+			dictionary[cursor-1] = dictionary[cursor-1] + dictionary[temp][0];
+			//cout << "   New: " << dictionary[cursor-1] << endl;			
+
+			dictionary[cursor] = dictionary[temp];
+
 
 			cursor++;
 		}
