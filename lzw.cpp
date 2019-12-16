@@ -25,7 +25,7 @@ void Lzw::initTable() {
 }
 
 bool Lzw::isInTable(string w) {
-	
+
 	return bTree->searchTree(w);
 }
 
@@ -93,6 +93,12 @@ void Lzw::debug_print_bool_vector(vector<bool> bit_vec){
 void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 	Istream in(filename);
 	Ostream of(encodedFilename, encodedLen);
+
+	int encLen = encodedLen - 1;
+	of.put_bits_in_to_bitset(of.GenLBitSet(5,encLen));
+	cout<<dictionaryLength<<endl;
+	of.put_bits_in_to_bitset(of.GenLBitSet(encodedLen,dictionaryLength));
+
 	word = in.getNextByte();
 	while(true) {
 		letter = in.getNextByte();
@@ -106,9 +112,9 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 			//cout<<table[codes[word]]<<endl;
 
 			//DEBUG PRINT
-			/*cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+			cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
 			debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
-			cout<<endl;*/
+			cout<<endl;
 			//PRINT END
 
 			of.putWordToWrite(codes[word]);//write word to the file as encodedLen bit sequence
@@ -126,9 +132,9 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 	//of.putWordToWrite(word);
 
 	//DEBUG PRINT
-    /*cout<<"Word: "<<word<<" |Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+    cout<<"Word: "<<word<<" |Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
 	debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
-    cout<<endl;*/
+    cout<<endl;
     //PRINT END
 
 
@@ -154,18 +160,24 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
     cout<<endl;*/
 }
 
+//5bit encodedLen-1, encodedLen bit. dictionaryLength, ....kodai encodedLen bit ilgio.
 
 void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 
 	//Istream in(encodedFilename);
 	stream = new Streamer(encodedFilename, filename, 1);
 	Ostream of(filename, encodedLen);
-	stream->get_k_bits(9);
+
+	stream->get_k_bits(5);
+	encodedLen = stream->w+1;
+	cout<<encodedLen<<endl;
+
+	stream->get_k_bits(encodedLen);
 	dictionaryLength = stream->w;
 
 	cout << "dictionaryLength: " << dictionaryLength << endl;
 
-	for(int i = 0; i < 256; i++) 
+	for(int i = 0; i < 256; i++)
 	{
 		dictionary[i] = (char)i;
 
@@ -174,14 +186,14 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 
 	int temp;
 	stream->get_k_bits(9);
-	temp = stream->w; 
+	temp = stream->w;
 	dictionary[cursor] = dictionary[temp];
 	cursor++;
 	bool cont;
 	for(int i = 1; i < dictionaryLength; i++)
 	{
 		cont = stream->get_k_bits(9);
-		temp = stream->w; 
+		temp = stream->w;
 		dictionary[cursor] = dictionary[temp];
 		of.fillCursor(dictionary[cursor-1]);
 
@@ -189,18 +201,18 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 
 		cursor++;
 	}
-	
+
 	while(cont)
 	{
 		if(stream->get_k_bits(9) == 0)
 		{
-			temp = stream->w; 
+			temp = stream->w;
 			of.fillCursor(dictionary[temp]);
 			break;
 		}
 		else
 		{
-			temp = stream->w; 
+			temp = stream->w;
 		}
 	}
 	of.writeToFile();

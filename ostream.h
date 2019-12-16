@@ -28,10 +28,10 @@ class Ostream {
 
 		ofstream file;
 
-		void put_bits_in_to_bitset(vector<bool> oneW);
+
 
 	public:
-
+        void put_bits_in_to_bitset(vector<bool> oneW);
 		bool lastConverted = false;
 
 		vector<bool> GenLBitSet(int L, int Dec);

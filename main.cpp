@@ -6,16 +6,16 @@ using namespace std;
 
 int main()
 {
-	int dictionaryLength = 256; //parameter?
+	int dictionaryLength = 511; //parameter?
 	int encodedLen = 9;
-	string filename = "test.txt";
-	string encodedFilename = "entest";
+	string filename = "test2.txt";
+	string encodedFilename = "entest2";
 
 
 	Lzw lzw(dictionaryLength);
 	lzw.compress(filename, encodedFilename, encodedLen);
 	cout << "Encoded" << endl;
-	//lzw.decode("entest", "detest.txt", 9);
+	//lzw.decode("entest2", "detest.txt", encodedLen);
 	//cout << "Decoded" << endl;
 	lzw.printTable();
 	cout << endl << "test table" << endl << endl;
