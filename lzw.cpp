@@ -249,6 +249,7 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 		if(stream->get_k_bits(encodedLen) == 0)
 		{
 			temp = stream->w;
+			if (temp != 0)
 			of.fillCursor(dictionary[temp]);
 			break;
 		}

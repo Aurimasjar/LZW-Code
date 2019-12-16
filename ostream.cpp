@@ -104,8 +104,10 @@ void Ostream::fillCursor(string word){
         letter = word[i];
         ofBuffer[ofBuffSize] = letter;
         ofBuffSize++;
-        if (ofBuffSize == B) 
+        if (ofBuffSize == B) {
             writeToFile();
+            ofBuffSize = 0;
+        }
     }
 }
 
