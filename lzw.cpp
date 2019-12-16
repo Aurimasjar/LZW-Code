@@ -5,15 +5,18 @@ Lzw::Lzw(int length) {
 	initTable();
 }
 
-Lzw::~Lzw() {}
+Lzw::~Lzw() {
+	delete bTree;
+}
 
 void Lzw::initTable() {
     string bf;
+	bTree = new binaryTree<string>();
 	for(int i = 0; i < 256; i++) {
 		//cout <<(char)i << " ";
 		bf = (char)i;
-		//table.push_back(""+(char)i);
-		table.push_back(bf);
+		bTree->insertValue(bf);
+		//table.push_back(bf);
 
 		codes[bf] = i;
 
@@ -23,15 +26,12 @@ void Lzw::initTable() {
 
 bool Lzw::isInTable(string w) {
 	
-	if(find(table.begin(), table.end(), w) != table.end()) {
-		return true;
-	}
-	return false;
+	return bTree->searchTree(w);
 }
 
 void Lzw::addToTable(string w) {
-
-	table.push_back(w);
+	bTree->insertValue(w);
+	//table.push_back(w);
 	//cout<<codes.size()<<endl;
 	codes[w] = codes.size();
 
@@ -40,14 +40,17 @@ void Lzw::addToTable(string w) {
 
 //atspausdina lenteles vektoriu, informacia saugoma table vektoriuje ta pati kaip ir codes map'e
 void Lzw::printTable(){
-    cout<<"Table in vector: "<<endl;
+    /*cout<<"Table in vector: "<<endl;
     for(int i = 0; i<table.size(); i++)
     {
         cout<<table[i]<<" ";
 
-    }
+    }*/
+	cout << "Table in tree" << endl;
+	bTree->inPrint();
 	cout<<endl;
-    cout<<"Size of table: "<<table.size()<<endl;
+    //cout<<"Size of table: "<<table.size()<<endl;
+	cout << "Size of tree: " << bTree->countNodes();
 }
 
 //atspausdina lenteles vektoriu, informacia saugoma codes map'e ta pati kaip ir table vektoriuje
@@ -57,7 +60,6 @@ void Lzw::printTableMAP(){
     vector<string> keys;
     for(map<string, int>::iterator it = codes.begin(); it != codes.end(); ++it) {
         keys.push_back(it->first);
-       // cout << it->first << "\n";
     }
 
     cout<<"Words:"<<endl;
@@ -104,18 +106,18 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 			//cout<<table[codes[word]]<<endl;
 
 			//DEBUG PRINT
-			cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+			/*cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
 			debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
-			cout<<endl;
+			cout<<endl;*/
 			//PRINT END
 
 			of.putWordToWrite(codes[word]);//write word to the file as encodedLen bit sequence
 			addToTable(word + letter);
 
 			//DEBUG PRINT
-			cout<<"New word: "<<word + letter<<" | Code of word: "<<codes[word+letter]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+			/*cout<<"New word: "<<word + letter<<" | Code of word: "<<codes[word+letter]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
 			debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word+letter]));
-			cout<<endl;
+			cout<<endl;*/
 			//PRINT END
 
 			word = letter;
@@ -124,9 +126,9 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 	//of.putWordToWrite(word);
 
 	//DEBUG PRINT
-    cout<<"Word: "<<word<<" |Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+    /*cout<<"Word: "<<word<<" |Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
 	debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
-    cout<<endl;
+    cout<<endl;*/
     //PRINT END
 
 
@@ -205,3 +207,4 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 
 
 }
+       // cout << it->first << "\n";

@@ -9,14 +9,15 @@ int main()
 	int dictionaryLength = 256; //parameter?
 	int encodedLen = 9;
 	string filename = "test.txt";
-	string encodedFilename = "encoded";
+	string encodedFilename = "entest";
 
 
 	Lzw lzw(dictionaryLength);
 	lzw.compress(filename, encodedFilename, encodedLen);
-
-	lzw.decode("encod", "testUno.txt", 9);
-	/*lzw.printTable();
+	cout << "Encoded" << endl;
+	//lzw.decode("entest", "detest.txt", 9);
+	//cout << "Decoded" << endl;
+	lzw.printTable();
 	cout << endl << "test table" << endl << endl;
-	lzw.printTableMAP();*/
+	//lzw.printTableMAP();
 }

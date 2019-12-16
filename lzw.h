@@ -8,6 +8,7 @@
 #include "istream.h"
 #include "ostream.h"
 #include "streamer.h"
+#include "treeManagement.h"
 
 using namespace std;
 
@@ -15,7 +16,8 @@ class Lzw {
 
 	private:
 
-		vector<string> table; //table of words, first 256 elements are characters from ASCII table
+		//vector<string> table; //table of words, first 256 elements are characters from ASCII table
+		binaryTree<string> *bTree;
 		string word;
 		char letter;
 		int dictionaryLength; // our parameter
