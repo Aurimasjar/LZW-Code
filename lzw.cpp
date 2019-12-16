@@ -231,6 +231,7 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 		else
 		{
 			temp = stream->w;
+			of.fillCursor(dictionary[temp]);
 		}
 	}
 	of.writeToFile();
