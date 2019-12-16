@@ -197,12 +197,12 @@ void Lzw::decode(string encodedFilename, string filename, int encodedLen){
 			cout << "Read: " << temp << endl;
 			//dictionary[cursor] = dictionary[temp];
 			
-
-			dictionary[cursor-1] = dictionary[cursor-1] + dictionary[temp][0];
+			if(temp != 0)
+			{
+				dictionary[cursor-1] = dictionary[cursor-1] + dictionary[temp][0];
+			}
 			//of.fillCursor(dictionary[temp]);
 			of.fillCursor(dictionary[cursor-1]);
-
-
 			cursor++;
 			cont = false;
 			break;
