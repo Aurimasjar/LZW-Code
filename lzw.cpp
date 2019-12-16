@@ -86,7 +86,7 @@ void Lzw::printTableMAP(){
 void Lzw::debug_print_bool_vector(vector<bool> bit_vec){
     for(int i = 0; i< bit_vec.size(); i++)
     {
-        cout<<bit_vec[i];
+        //cout<<bit_vec[i];
     }
 }
 
@@ -112,9 +112,9 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 			//cout<<table[codes[word]]<<endl;
 
 			//DEBUG PRINT
-			cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
-			debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
-			cout<<endl;
+			//cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+			//debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
+			//cout<<endl;
 			//PRINT END
 
 
@@ -131,9 +131,9 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 
 		}
 		else{
-            cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
-			debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
-			cout<<endl;
+           // cout<<"Word: "<<word<<" | Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+			//debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
+			//cout<<endl;
 
             of.putWordToWrite(codes[word]);
             word = letter;
@@ -142,14 +142,14 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 	//of.putWordToWrite(word);
 
 	//DEBUG PRINT
-    cout<<"Word: "<<word<<" |Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
-	debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
-    cout<<endl;
+    //cout<<"Word: "<<word<<" |Code of word: "<<codes[word]<<" |bin of code: ";    //" Test vector: "<<table[codes[word]]<<endl;
+	//debug_print_bool_vector(of.GenLBitSet(encodedLen,codes[word]));
+    //cout<<endl;
     //PRINT END
 
 
 	of.putWordToWrite(codes[word]);
-	cout << endl;
+	//cout << endl;
 
 	if(of.lastConverted == false)
     {

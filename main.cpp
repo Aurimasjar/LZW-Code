@@ -14,12 +14,12 @@ int main()
 
 	Lzw lzw(dictionaryLength);
 	lzw.compress(filename, encodedFilename, encodedLen);
-	cout << "Encoded" << endl;
+	//cout << "Encoded" << endl;
 
 	//cout << "Decoded" << endl;
-	lzw.printTable();
-	cout << endl << "test table" << endl << endl;
+	//lzw.printTable();
+	//cout << endl << "test table" << endl << endl;
 	//lzw.printTableMAP();
 
-	//lzw.decode("bigtxt", "decbigtxt.txt", encodedLen);
+	lzw.decode("bigtxt", "decbigtxt.txt", encodedLen);
 }
