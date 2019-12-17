@@ -27,10 +27,13 @@ int main() {
 				cin >> originalFile;
 				cout << "Enter encoded file: ";
 				cin >> endcodedFile;
-				cout << "Enter dictionary length: ";
-				cin >> dictionaryLength;
+				//cout << "Enter dictionary length: ";
+				//cin >> dictionaryLength;
 				cout << "Enter encoded word length: ";
 				cin >> encodedLen;
+
+				dictionaryLength = pow(2, encodedLen) - 1;
+
 				lzw = new Lzw(dictionaryLength);
 
 				lzw->compress(originalFile, endcodedFile, encodedLen);

@@ -10,7 +10,7 @@ Lzw::~Lzw() {
 }
 
 Lzw::Lzw() {
-	
+
 }
 
 void Lzw::initTable() {
@@ -100,8 +100,8 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 
 	int encLen = encodedLen - 1;
 	of.put_bits_in_to_bitset(of.GenLBitSet(5,encLen));
-	cout<<dictionaryLength<<endl;
-	of.put_bits_in_to_bitset(of.GenLBitSet(encodedLen,dictionaryLength));
+	//cout<<dictionaryLength<<endl;
+	//of.put_bits_in_to_bitset(of.GenLBitSet(encodedLen,dictionaryLength));
 
 	word = in.getNextByte();
 	while(true) {
@@ -110,7 +110,7 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 		if(isInTable(word + letter)) {
 			word = word + letter;
 		}
-		else if(bTree->countNodes() < dictionaryLength){
+		else if(bTree->count < dictionaryLength){
 
 			//of.putWordToWrite(word); //write word to the file as 12 bit sequence
 			//cout<<table[codes[word]]<<endl;
@@ -183,22 +183,22 @@ void Lzw::decode(string encodedFilename, string filename){
 
 	stream->get_k_bits(5);
 	int encodedLen = stream->w+1;
-	//cout<<encodedLen<<endl;
+	cout<<encodedLen<<endl;
 
 	Ostream of(filename, encodedLen);
 
 	//stream->get_k_bits(encodedLen);
 	//dictionaryLength = stream->w;
-	dictionaryLength = pow(2, encodedLen);
+	dictionaryLength = pow(2, encodedLen) - 1;
 
-	//cout << "dictionaryLength: " << dictionaryLength << endl;
+	cout << "dictionaryLength: " << dictionaryLength << endl;
 
 	for(int i = 0; i < 256; i++)
 	{
 		dictionary[i] = (char)i;
 
 	}
-	int cursor = 257;
+	int cursor = 256;
 
 	int temp;
 	stream->get_k_bits(encodedLen);
@@ -211,7 +211,7 @@ void Lzw::decode(string encodedFilename, string filename){
 		if(stream->get_k_bits(encodedLen) == 0){
 			temp = stream->w;
 			//cout << "Read: " << temp << endl;
-			//cout << "Writing: " << dictionary[cursor-1] << " + " << dictionary[temp] << endl;	
+			//cout << "Writing: " << dictionary[cursor-1] << " + " << dictionary[temp] << endl;
 			//dictionary[cursor] = dictionary[temp];
 			of.fillCursor(dictionary[cursor-1]);
 
@@ -221,7 +221,7 @@ void Lzw::decode(string encodedFilename, string filename){
 				of.fillCursor(dictionary[temp]);
 			}
 			//of.fillCursor(dictionary[temp]);
-			
+
 			cursor++;
 			cont = false;
 			break;
@@ -234,10 +234,10 @@ void Lzw::decode(string encodedFilename, string filename){
 
 			//cout << "   Temp: " << temp << "  ";
 			//cout << dictionary[cursor-1] << " ("<< cursor-1 << ") | " << dictionary[cursor][0] <<  endl;
-			
+
 
 			dictionary[cursor-1] = dictionary[cursor-1] + dictionary[temp][0];
-			//cout << "   New: " << dictionary[cursor-1] << endl;			
+			//cout << "   New: " << dictionary[cursor-1] << endl;
 
 			dictionary[cursor] = dictionary[temp];
 
