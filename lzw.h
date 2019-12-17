@@ -48,9 +48,10 @@ class Lzw {
 		//???
 		void debug_print_bool_vector(vector<bool> bit_vec);
 
-		void decode(string encodedFilename, string filename, int encodedLen);
+		void decode(string encodedFilename, string filename);
 
 		Lzw(int length);
+		Lzw();
 		~Lzw();
 };
 

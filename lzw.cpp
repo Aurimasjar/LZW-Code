@@ -9,6 +9,10 @@ Lzw::~Lzw() {
 	delete bTree;
 }
 
+Lzw::Lzw() {
+	
+}
+
 void Lzw::initTable() {
     string bf;
 	bTree = new binaryTree<string>();
@@ -172,15 +176,16 @@ void Lzw::compress(string filename, string encodedFilename, int encodedLen) {
 
 //5bit encodedLen-1, encodedLen bit. dictionaryLength, ....kodai encodedLen bit ilgio.
 
-void Lzw::decode(string encodedFilename, string filename, int encodedLen){
+void Lzw::decode(string encodedFilename, string filename){
 
 	//Istream in(encodedFilename);
 	stream = new Streamer(encodedFilename, filename, 1);
-	Ostream of(filename, encodedLen);
 
 	stream->get_k_bits(5);
-	encodedLen = stream->w+1;
+	int encodedLen = stream->w+1;
 	cout<<encodedLen<<endl;
+
+	Ostream of(filename, encodedLen);
 
 	stream->get_k_bits(encodedLen);
 	dictionaryLength = stream->w;
