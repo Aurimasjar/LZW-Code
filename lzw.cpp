@@ -183,14 +183,15 @@ void Lzw::decode(string encodedFilename, string filename){
 
 	stream->get_k_bits(5);
 	int encodedLen = stream->w+1;
-	cout<<encodedLen<<endl;
+	//cout<<encodedLen<<endl;
 
 	Ostream of(filename, encodedLen);
 
-	stream->get_k_bits(encodedLen);
-	dictionaryLength = stream->w;
+	//stream->get_k_bits(encodedLen);
+	//dictionaryLength = stream->w;
+	dictionaryLength = pow(2, encodedLen);
 
-	cout << "dictionaryLength: " << dictionaryLength << endl;
+	//cout << "dictionaryLength: " << dictionaryLength << endl;
 
 	for(int i = 0; i < 256; i++)
 	{
